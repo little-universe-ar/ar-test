@@ -50,7 +50,13 @@
   embedded
   vr-mode-ui="enabled: false"
   renderer="logarithmicDepthBuffer: true;"
-  arjs="sourceType: webcam; debugUIEnabled: false;">
+  arjs="
+    trackingMethod: best;
+    sourceType: webcam;
+    debugUIEnabled: false;
+    detectionMode: mono_and_matrix;
+    matrixCodeType: 3x3;
+  ">
 
   <a-assets>
     <img id="mapImage" src="ar-image.png">
@@ -59,13 +65,14 @@
   <a-marker
     type="pattern"
     url="marker.patt"
+
     smooth="true"
-    smoothCount="10"
-    smoothTolerance="0.01"
-    smoothThreshold="5">
+    smoothCount="20"
+    smoothTolerance="0.02"
+    smoothThreshold="3">
 
     <!-- MAP全体 -->
-    <a-entity rotation="0 90 0">
+    <a-entity rotation="0 0 0">
 
       <!-- 白い土台 -->
       <a-plane
@@ -76,7 +83,7 @@
         color="#ffffff">
       </a-plane>
 
-      <!-- 館内マップ画像 -->
+      <!-- 館内マップ -->
       <a-image
         src="#mapImage"
         position="0 0.055 0"
@@ -85,8 +92,7 @@
         height="1.95">
       </a-image>
 
-
-      <!-- ★ レトロ東京 強調エリア -->
+      <!-- レトロ東京 強調 -->
       <a-box
         position="-0.13 0.14 0.03"
         width="0.72"
@@ -97,7 +103,6 @@
           opacity: 0.38;
           transparent: true;">
       </a-box>
-
 
       <!-- 現在地ピン -->
       <a-cone
@@ -114,7 +119,6 @@
         radius="0.105"
         color="#e60012">
       </a-sphere>
-
 
       <!-- 現在地ラベル -->
       <a-entity
