@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
 
   <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
@@ -13,10 +13,30 @@
       margin: 0;
       overflow: hidden;
     }
+
+    .guide {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      background: rgba(0,0,0,.72);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 20px;
+      font-family: sans-serif;
+      font-size: 14px;
+      text-align: center;
+      pointer-events: none;
+    }
   </style>
 </head>
 
 <body>
+
+<div class="guide">
+  LUマーカーにカメラを向けてください
+</div>
 
 <a-scene
   embedded
@@ -25,9 +45,10 @@
   arjs="sourceType: webcam; debugUIEnabled: false;">
 
   <a-assets>
-    <img id="arimage" src="ar-image.png">
+    <img id="mapImage" src="ar-image.png">
   </a-assets>
 
+  <!-- LUマーカー -->
   <a-marker
     type="pattern"
     url="marker.patt"
@@ -36,15 +57,57 @@
     smoothTolerance="0.01"
     smoothThreshold="5">
 
-    <!-- 女の子画像 -->
-    <a-image
-      src="#arimage"
-      position="0 0.9 0"
+    <!-- マップの土台 -->
+    <a-plane
+      position="0 0.05 0"
       rotation="-90 0 0"
-      width="1.15"
-      height="1.55"
-      material="transparent: true; side: double;">
+      width="2.8"
+      height="2.0"
+      color="#ffffff">
+    </a-plane>
+
+    <!-- 館内マップ -->
+    <a-image
+      src="#mapImage"
+      position="0 0.065 0"
+      rotation="-90 0 0"
+      width="2.7"
+      height="1.9">
     </a-image>
+
+    <!-- 現在地ピン -->
+    <a-cone
+      position="0 0.35 0"
+      radius-bottom="0.10"
+      radius-top="0"
+      height="0.28"
+      rotation="180 0 0">
+    </a-cone>
+
+    <!-- 現在地の丸 -->
+    <a-sphere
+      position="0 0.52 0"
+      radius="0.11">
+    </a-sphere>
+
+    <!-- 現在地表示 -->
+    <a-text
+      value="YOU ARE HERE"
+      position="0 0.78 0"
+      align="center"
+      width="2.5"
+      color="#111111"
+      side="double">
+    </a-text>
+
+    <a-text
+      value="RETRO TOKYO"
+      position="0 0.62 0"
+      align="center"
+      width="2.2"
+      color="#111111"
+      side="double">
+    </a-text>
 
   </a-marker>
 
